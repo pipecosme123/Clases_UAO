@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProyectoApp">
         <activity
+            android:name=".IniciarSesion"
+            android:exported="false" />
+        <activity
             android:name=".gestion_admin"
             android:exported="false" />
         <activity
