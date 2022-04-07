@@ -82,9 +82,17 @@ public class IniciarSesion extends AppCompatActivity {
                 //  Toast.makeText(MainActivity.this, "Hay informacion por llenar", Toast.LENGTH_SHORT).show();
                 if (user != null)
                     context.runOnUiThread(new Runnable() {
+
+
                         @Override
                         public void run() {
-                        if(user.contraseña== etContraseña.getText().toString()){
+
+                            String contr = user.getContraseña();
+                            String userCont =etContraseña.getText().toString();
+                            Log.d("key of the message", "The message " + contr + " , "+userCont);
+                        if(contr.equals(userCont)){
+
+                            Log.d("key of the message", "The message " + user.getContraseña());
                             Toast.makeText(context, "Bienvenido "+ user.getNombre(), Toast.LENGTH_LONG).show();
                             Intent i = new Intent(IniciarSesion.this, gestion_admin.class);
                             startActivity(i);
