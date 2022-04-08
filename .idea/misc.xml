@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Acer/Documents/universidad/Decimo_semestre/Apps/Proyecto/Nueva carpeta/Clases_UAO/app/src/main/res/layout/activity_gestion_admin.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/Acer/Documents/universidad/Decimo_semestre/Apps/Proyecto/Nueva carpeta/Clases_UAO/app/src/main/res/layout/activity_gestion_cursos_admin.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/Acer/Documents/universidad/Decimo_semestre/Apps/Proyecto/Nueva carpeta/Clases_UAO/app/src/main/res/layout/activity_gestion_docentes_admin.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Acer/Documents/universidad/Decimo_semestre/Apps/Proyecto/Nueva carpeta/Clases_UAO/app/src/main/res/layout/activity_iniciar_sesion.xml" value="0.22826086956521738" />
       </map>
     </option>
