@@ -24,4 +24,10 @@ public class Gestion_DocentesAdmin extends AppCompatActivity {
         Intent i = new Intent(this, crearDocenteAdmin.class);
         startActivity(i);
     }
+
+    public void irAConsultarUser(View view){
+        Intent i = new Intent(this, ConsultarUsuario.class);
+        i.putExtra("TipoUsuario", "Docente");
+        startActivity(i);
+    }
 }

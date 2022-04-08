@@ -26,7 +26,8 @@
         android:layout_marginStart="38dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="30dp"
-        android:text="Crear Docente"
+        android:onClick="irAConsultarUser"
+        android:text="Consultar Docentes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gestionDocentesAdmin_btCrearDocente" />
