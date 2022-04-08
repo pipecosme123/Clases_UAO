@@ -17,8 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProyectoApp"
         android:usesCleartextTraffic="true">
-        
-
+        <activity
+            android:name=".Gestion_DocentesAdmin"
+            android:exported="false" />
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />

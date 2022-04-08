@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btnIniciarSesion(View view){
-        Intent main = new Intent(this, gestion_admin.class);
+        Intent main = new Intent(this, IniciarSesion.class);
         startActivity(main);
     }
 
