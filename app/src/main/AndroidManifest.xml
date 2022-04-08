@@ -18,8 +18,12 @@
         android:theme="@style/Theme.ProyectoApp"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".Gestion_DocentesAdmin"
+            android:name=".crearDocenteAdmin"
             android:exported="false" />
+        <activity
+            android:name=".Gestion_DocentesAdmin"
+            android:exported="false"
+            android:parentActivityName=".gestion_admin"/>
 
         <uses-library
             android:name="org.apache.http.legacy"
