@@ -10,11 +10,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProyectoApp">
         <activity
-            android:name=".gestion_cursosAdmin"
+            android:name=".modificarCurso"
             android:exported="false" />
         <activity
+            android:name=".consultarCurso"
+            android:exported="false"
+            android:parentActivityName=".gestion_cursosAdmin" />
+        <activity
+            android:name=".crearCurso"
+            android:exported="false"
+            android:parentActivityName=".gestion_cursosAdmin" />
+        <activity
+            android:name=".gestion_cursosAdmin"
+            android:exported="false"
+            android:parentActivityName=".gestion_admin" />
+        <activity
             android:name=".gestion_admin"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
