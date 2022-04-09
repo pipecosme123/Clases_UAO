@@ -43,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="26dp"
         android:text="Cedula"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/crearUser_etNombre" />
@@ -71,16 +71,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/crearUser_etFacultad" />
-
-    <EditText
-        android:id="@+id/crearUser_etNombre"
-        android:layout_width="168dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="16dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <EditText
         android:id="@+id/crearUser_etCedula"
@@ -193,11 +183,21 @@
         android:id="@+id/crearUser_etApellido"
         android:layout_width="182dp"
         android:layout_height="40dp"
-        android:layout_marginStart="34dp"
         android:layout_marginEnd="11dp"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/crearUser_etNombre"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+    <EditText
+        android:id="@+id/crearUser_etNombre"
+        android:layout_width="149dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="53dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toStartOf="@+id/crearUser_etApellido"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 </androidx.constraintlayout.widget.ConstraintLayout>

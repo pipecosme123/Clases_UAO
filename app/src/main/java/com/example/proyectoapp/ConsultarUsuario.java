@@ -32,6 +32,7 @@ public class ConsultarUsuario extends AppCompatActivity {
     private String tipoUser;
     private ArrayList<usuarios> listaUsuarios;
     private ArrayList<String> listaInfo;
+    private Button btBuscar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +40,7 @@ public class ConsultarUsuario extends AppCompatActivity {
 
         edBuscador = (EditText)findViewById(R.id.consultarUser_etBuscar);
         lvAllUser = (ListView)findViewById(R.id.ConsultarUser_lvUsuarios);
+        btBuscar = (Button)findViewById(R.id.ConsultarUsuario_btBuscar);
         tipoUser = getIntent().getStringExtra("TipoUsuario");
         listaUsuarios = new ArrayList<usuarios>();
         listaInfo = new ArrayList<String>();
@@ -46,7 +48,22 @@ public class ConsultarUsuario extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Consultar Usuarios");
 
+
+
         new ConsultarUsuario.TraerUsuarios(ConsultarUsuario.this).execute();
+
+
+        btBuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!edBuscador.getText().toString().trim().equalsIgnoreCase("")){
+                    new ConsultarUsuario.BuscarUser(ConsultarUsuario.this).execute();
+                }else{
+                    new ConsultarUsuario.TraerUsuarios(ConsultarUsuario.this).execute();
+                }
+
+            }
+        });
     }
 
     private ArrayList<usuarios> consultar() throws JSONException, IOException {
@@ -72,10 +89,12 @@ public class ConsultarUsuario extends AppCompatActivity {
 
             if (json_array.length() > 0) { // si lo encontrado tiene al menos un registro
                 ArrayList<usuarios> listaUsu = new ArrayList<usuarios>();
+                listaInfo=new ArrayList<String>();
+                listaUsuarios=new ArrayList<usuarios>();
                for(int i = 0;i<json_array.length();i++){
                    usuarios user = new usuarios(json_array.getJSONObject(i));// instanciamos la clase multa para obtener los datos json
-
-                   listaInfo.add(user.getNombre().toString());
+                    String userInfo = user.getNombre() + " " + user.getApellidos();
+                   listaInfo.add(userInfo);
                    listaUsu.add(user);
                }
 
@@ -86,6 +105,39 @@ public class ConsultarUsuario extends AppCompatActivity {
         }
         return null;
     }
+
+
+
+    private ArrayList<usuarios> buscarUsuarioPorNombre() throws JSONException, IOException {
+
+        String url = Constants.URL + "claseUAO/get-by-user.php"; // Ruta
+
+        //DATOS
+        List<NameValuePair> nameValuePairs; // lista de datos
+        nameValuePairs = new ArrayList<NameValuePair>(2);//definimos array
+        nameValuePairs.add(new BasicNameValuePair("tabla", "nombre"));
+        nameValuePairs.add(new BasicNameValuePair("usuario", edBuscador.getText().toString().trim())); // pasamos el id al servicio php
+
+        String json = APIHandler.POSTRESPONSE(url, nameValuePairs); // creamos var json que se le asocia la respuesta del webservice
+        Log.d("key of the message", "The message " + json);
+        if (json != null) { // si la respuesta no es vacia
+            JSONObject object = new JSONObject(json); // creamos el objeto json que recorrera el servicio
+            JSONArray json_array = object.optJSONArray("user");// accedemos al objeto json llamado multas
+
+            ArrayList<usuarios> listaUsu = new ArrayList<usuarios>();
+            listaInfo=new ArrayList<String>();
+            listaUsuarios=new ArrayList<usuarios>();
+            for(int i = 0;i<json_array.length();i++){
+                usuarios user = new usuarios(json_array.getJSONObject(i));// instanciamos la clase multa para obtener los datos json
+                String userInfo = user.getNombre() + " " + user.getApellidos();
+                listaInfo.add(userInfo);
+                listaUsu.add(user);
+            }
+            return listaUsu;
+        }
+        return null;
+    }
+
 
     class TraerUsuarios extends AsyncTask<String, String, String> {
         private Activity context;
@@ -128,5 +180,43 @@ public class ConsultarUsuario extends AppCompatActivity {
     public void llenarListView(){
         ArrayAdapter<String>Adapter= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,listaInfo);
         lvAllUser.setAdapter(Adapter);
+    }
+
+
+    class BuscarUser extends AsyncTask<String, String, String> {
+        private Activity context;
+
+        BuscarUser(Activity context) {
+            this.context = context;
+        }
+
+        protected String doInBackground(String... params) {
+            try {
+                listaUsuarios = buscarUsuarioPorNombre();
+                //  Toast.makeText(MainActivity.this, "Hay informacion por llenar", Toast.LENGTH_SHORT).show();
+                if (listaUsuarios != null)
+                    context.runOnUiThread(new Runnable() {
+
+
+                        @Override
+                        public void run() {
+                            llenarListView();
+                        }
+                    });
+                else
+                    context.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "Multa no encontrada", Toast.LENGTH_LONG).show();
+
+                        }
+                    });
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 }

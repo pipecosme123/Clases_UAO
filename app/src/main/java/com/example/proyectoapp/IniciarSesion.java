@@ -52,7 +52,8 @@ public class IniciarSesion extends AppCompatActivity {
 
         //DATOS
         List<NameValuePair> nameValuePairs; // lista de datos
-        nameValuePairs = new ArrayList<NameValuePair>(1);//definimos array
+        nameValuePairs = new ArrayList<NameValuePair>(2);//definimos array
+        nameValuePairs.add(new BasicNameValuePair("tabla", "usuario"));
         nameValuePairs.add(new BasicNameValuePair("usuario", etNombreUsu.getText().toString().trim())); // pasamos el id al servicio php
 
         String json = APIHandler.POSTRESPONSE(url, nameValuePairs); // creamos var json que se le asocia la respuesta del webservice

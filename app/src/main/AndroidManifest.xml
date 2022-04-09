@@ -23,7 +23,8 @@
             android:parentActivityName=".Gestion_DocentesAdmin" />
         <activity
             android:name=".crearDocenteAdmin"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".Gestion_DocentesAdmin" />
         <activity
             android:name=".Gestion_DocentesAdmin"
             android:exported="false"
