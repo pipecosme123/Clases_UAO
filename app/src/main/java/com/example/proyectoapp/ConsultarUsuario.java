@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -30,6 +31,7 @@ public class ConsultarUsuario extends AppCompatActivity {
     private ListView lvAllUser;
     private String tipoUser;
     private ArrayList<usuarios> listaUsuarios;
+    private ArrayList<String> listaInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +41,7 @@ public class ConsultarUsuario extends AppCompatActivity {
         lvAllUser = (ListView)findViewById(R.id.ConsultarUser_lvUsuarios);
         tipoUser = getIntent().getStringExtra("TipoUsuario");
         listaUsuarios = new ArrayList<usuarios>();
+        listaInfo = new ArrayList<String>();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Consultar Usuarios");
@@ -48,25 +51,34 @@ public class ConsultarUsuario extends AppCompatActivity {
 
     private ArrayList<usuarios> consultar() throws JSONException, IOException {
 
-        String url = Constants.URL + "claseUAO/get-by-All-Users.php"; // Ruta
+        String url = Constants.URL + "claseUAO/getUsers.php"; // Ruta
 
         //DATOS
         List<NameValuePair> nameValuePairs; // lista de datos
         nameValuePairs = new ArrayList<NameValuePair>(1);//definimos array
         nameValuePairs.add(new BasicNameValuePair("tipo", tipoUser.trim())); // pasamos el id al servicio php
 
+
+
         String json = APIHandler.POSTRESPONSE(url, nameValuePairs); // creamos var json que se le asocia la respuesta del webservice
+
         Log.d("key of the message", "--------------------------" + json);
+
         if (json != null) { // si la respuesta no es vacia
             JSONObject object = new JSONObject(json); // creamos el objeto json que recorrera el servicio
+
             JSONArray json_array = object.optJSONArray("user");// accedemos al objeto json llamado multas
+            JSONArray jArray = new JSONArray();
+
             if (json_array.length() > 0) { // si lo encontrado tiene al menos un registro
                 ArrayList<usuarios> listaUsu = new ArrayList<usuarios>();
                for(int i = 0;i<json_array.length();i++){
                    usuarios user = new usuarios(json_array.getJSONObject(i));// instanciamos la clase multa para obtener los datos json
-                   Log.d("key of the message", "The message " + user);
+
+                   listaInfo.add(user.getNombre().toString());
                    listaUsu.add(user);
                }
+
                return listaUsu;
               //  return user;// retornamos la multa
             }
@@ -93,9 +105,7 @@ public class ConsultarUsuario extends AppCompatActivity {
                         @Override
                         public void run() {
 
-
-
-
+                            llenarListView();
                         }
                     });
                 else
@@ -113,5 +123,10 @@ public class ConsultarUsuario extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+    public void llenarListView(){
+        ArrayAdapter<String>Adapter= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,listaInfo);
+        lvAllUser.setAdapter(Adapter);
     }
 }

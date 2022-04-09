@@ -79,9 +79,9 @@ public class crearDocenteAdmin extends AppCompatActivity {
         //DATOS
         List<NameValuePair> nameValuePairs; // definimos la lista de datos
         nameValuePairs = new ArrayList<NameValuePair>(7); // tamaño del array
-        nameValuePairs.add(new BasicNameValuePair("cedulas", Etnombre.getText().toString().trim()));
+        nameValuePairs.add(new BasicNameValuePair("cedulas", EtCedula.getText().toString().trim()));
         nameValuePairs.add(new BasicNameValuePair("nombre", EtApellido.getText().toString().trim()));
-        nameValuePairs.add(new BasicNameValuePair("apellidos", EtCedula.getText().toString().trim()));
+        nameValuePairs.add(new BasicNameValuePair("apellidos", EtApellido.getText().toString().trim()));
         nameValuePairs.add(new BasicNameValuePair("facultad", EtFacultad.getText().toString().trim()));
         nameValuePairs.add(new BasicNameValuePair("programa", EtPrograma.getText().toString().trim()));
         nameValuePairs.add(new BasicNameValuePair("usuario", EtUsuario.getText().toString().trim()));

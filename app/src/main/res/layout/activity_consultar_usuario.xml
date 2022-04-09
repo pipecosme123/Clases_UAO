@@ -10,25 +10,31 @@
         android:id="@+id/consultarUser_etBuscar"
         android:layout_width="253dp"
         android:layout_height="46dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="61dp"
         android:ems="10"
+        android:hint="Nombre de usuario"
         android:inputType="textPersonName"
         android:text=""
-        android:hint="Nombre de usuario"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="61dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="62dp"
         android:text="Buscar"
-        tools:layout_editor_absoluteX="294dp"
-        tools:layout_editor_absoluteY="62dp" />
+        app:layout_constraintStart_toEndOf="@+id/consultarUser_etBuscar"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
         android:id="@+id/ConsultarUser_lvUsuarios"
         android:layout_width="409dp"
         android:layout_height="619dp"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="111dp" />
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
 </androidx.constraintlayout.widget.ConstraintLayout>
