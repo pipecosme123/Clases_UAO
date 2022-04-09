@@ -18,6 +18,10 @@
         android:theme="@style/Theme.ProyectoApp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".GestionEstudiantesAdmin"
+            android:exported="false"
+        android:parentActivityName=".gestion_admin" />
+        <activity
             android:name=".ConsultarUsuario"
             android:exported="false"
             android:parentActivityName=".Gestion_DocentesAdmin" />
@@ -27,8 +31,8 @@
             android:parentActivityName=".Gestion_DocentesAdmin" />
         <activity
             android:name=".Gestion_DocentesAdmin"
-            android:parentActivityName=".gestion_admin"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".gestion_admin" />
 
         <uses-library
             android:name="org.apache.http.legacy"

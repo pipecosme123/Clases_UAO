@@ -104,7 +104,7 @@ public class IniciarSesion extends AppCompatActivity {
                     context.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(context, "Multa no encontrada", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "Usuario no encontrado", Toast.LENGTH_LONG).show();
 
                         }
                     });

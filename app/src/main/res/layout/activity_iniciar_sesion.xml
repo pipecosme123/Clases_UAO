@@ -75,7 +75,6 @@
         android:layout_height="82dp"
         android:layout_marginStart="111dp"
         android:layout_marginTop="291dp"
-        android:onClick="IniciarSesion"
         android:text="Iniciar Sesion"
         app:iconTint="#000000"
         app:layout_constraintStart_toStartOf="parent"
