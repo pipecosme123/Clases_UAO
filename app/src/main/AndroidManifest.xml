@@ -18,9 +18,13 @@
         android:theme="@style/Theme.ProyectoApp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".EditarUsuario"
+            android:exported="false"
+            android:parentActivityName=".Gestion_DocentesAdmin" />
+        <activity
             android:name=".GestionEstudiantesAdmin"
             android:exported="false"
-        android:parentActivityName=".gestion_admin" />
+            android:parentActivityName=".gestion_admin" />
         <activity
             android:name=".ConsultarUsuario"
             android:exported="false"
