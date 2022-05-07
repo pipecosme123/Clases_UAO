@@ -45,6 +45,19 @@ public class MainUsers extends AppCompatActivity {
 
         new MainUsers.TraerCursos(MainUsers.this).execute();
 
+        lvCursos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                enviarAHomeUsers(position);
+            }
+        });
+
+    }
+
+    void enviarAHomeUsers(int pos){
+        Intent i = new Intent(this, cursoHome.class);
+        i.putExtra("UsuarioAEditar", idsCursos.get(pos));
+        startActivity(i);
     }
 
     private ArrayList<String> consultar() throws JSONException, IOException {
@@ -53,7 +66,7 @@ public class MainUsers extends AppCompatActivity {
         //DATOS
         List<NameValuePair> nameValuePairs; // lista de datos
         nameValuePairs = new ArrayList<NameValuePair>(3);//definimos array
-        nameValuePairs.add(new BasicNameValuePair("id", idUser.toString().trim())); // pasamos el id al servicio php
+        nameValuePairs.add(new BasicNameValuePair("id", idUser)); // pasamos el id al servicio php
         String json = APIHandler.POSTRESPONSE(url, nameValuePairs); // creamos var json que se le asocia la respuesta del webservice
         Log.d("key of the message", "------------------------------ " + json);
         if (json != null) { // si la respuesta no es vacia

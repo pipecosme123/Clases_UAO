@@ -18,6 +18,21 @@
         android:theme="@style/Theme.ProyectoApp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".CursoInfo"
+            android:exported="false" />
+        <activity
+            android:name=".eventosStudiantes_frag"
+            android:exported="false" />
+        <activity
+            android:name=".novedades_frag"
+            android:exported="false" />
+        <activity
+            android:name=".EstudiantesCursos_Frag"
+            android:exported="false" />
+        <activity
+            android:name=".cursoHome"
+            android:exported="false" />
+        <activity
             android:name=".MainUsers"
             android:exported="false" />
         <activity
