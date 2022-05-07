@@ -93,10 +93,7 @@ public class IniciarSesion extends AppCompatActivity {
                             Log.d("key of the message", "The message " + contr + " , "+userCont);
                         if(contr.equals(userCont)){
 
-                            Log.d("key of the message", "The message " + user.getContraseña());
-                            Toast.makeText(context, "Bienvenido "+ user.getNombre(), Toast.LENGTH_LONG).show();
-                            Intent i = new Intent(IniciarSesion.this, gestion_admin.class);
-                            startActivity(i);
+                           enviarAHome(user);
                         }
                         }
                     });
@@ -115,6 +112,27 @@ public class IniciarSesion extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+    void enviarAHome(usuarios user1){
+        if(user1.rol.equals("admin")){
+            Intent i = new Intent(IniciarSesion.this, gestion_admin.class);
+            i.putExtra("idUserMain",user1.id);
+            startActivity(i);
+        }
+
+      /*  if(user1.rol.equals("Docente")){
+            Intent i = new Intent(IniciarSesion.this, gestion_admin.class);
+            startActivity(i);
+        }*/
+
+        if(user1.rol.equals("Estudiante")){
+            Intent i = new Intent(IniciarSesion.this, MainUsers.class);
+            i.putExtra("idUserMain",user1.id);
+            startActivity(i);
+        }
+
+
     }
 
 }

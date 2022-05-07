@@ -39,9 +39,6 @@ public class ConsultarUsuario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consultar_usuario);
 
-
-
-
         edBuscador = (EditText)findViewById(R.id.consultarUser_etBuscar);
         lvAllUser = (ListView)findViewById(R.id.ConsultarUser_lvUsuarios);
         btBuscar = (Button)findViewById(R.id.ConsultarUsuario_btBuscar);
