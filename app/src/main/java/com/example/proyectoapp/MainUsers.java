@@ -3,15 +3,12 @@ package com.example.proyectoapp;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.HardwareRenderer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -36,7 +33,7 @@ public class MainUsers extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_users);
-        lvCursos=(ListView)findViewById(R.id.mainUser_listaCursos);
+        lvCursos=(ListView)findViewById(R.id.fragEstudiantes_lista);
         idUser=getIntent().getStringExtra("idUserMain");
 
 

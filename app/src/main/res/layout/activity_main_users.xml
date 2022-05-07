@@ -7,7 +7,7 @@
     tools:context=".MainUsers">
 
     <ListView
-        android:id="@+id/mainUser_listaCursos"
+        android:id="@+id/fragEstudiantes_lista"
         android:layout_width="409dp"
         android:layout_height="700dp"
         android:layout_marginStart="1dp"
