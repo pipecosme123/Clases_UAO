@@ -18,6 +18,9 @@
         android:theme="@style/Theme.ProyectoApp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".EscribirNovedad"
+            android:exported="false" />
+        <activity
             android:name=".CursoInfo"
             android:exported="false" />
         <activity

@@ -22,6 +22,7 @@
         android:layout_height="60dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="30dp"
+        android:onClick="irACrearNovedad"
         android:text="Crear Novedad"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

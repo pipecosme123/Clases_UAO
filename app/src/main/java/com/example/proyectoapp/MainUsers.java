@@ -54,6 +54,7 @@ public class MainUsers extends AppCompatActivity {
     void enviarAHomeUsers(int pos){
         Intent i = new Intent(this, cursoHome.class);
         i.putExtra("IdCurso", idsCursos.get(pos));
+        GlobalInfo.setCursoActual(idsCursos.get(pos));
         startActivity(i);
     }
 

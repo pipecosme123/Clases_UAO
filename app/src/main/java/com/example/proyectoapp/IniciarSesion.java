@@ -25,6 +25,7 @@ import java.util.List;
 public class IniciarSesion extends AppCompatActivity {
     private EditText etNombreUsu, etContraseña;
     private Button btVolver, btIniciarSesion;
+    private usuarios user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +80,7 @@ public class IniciarSesion extends AppCompatActivity {
 
         protected String doInBackground(String... params) {
             try {
-                final usuarios user = consultar();
+                user = consultar();
                 //  Toast.makeText(MainActivity.this, "Hay informacion por llenar", Toast.LENGTH_SHORT).show();
                 if (user != null)
                     context.runOnUiThread(new Runnable() {
@@ -129,6 +130,7 @@ public class IniciarSesion extends AppCompatActivity {
         if(user1.rol.equals("Estudiante")){
             Intent i = new Intent(IniciarSesion.this, MainUsers.class);
             i.putExtra("idUserMain",user1.id);
+            GlobalInfo.setUserActual(user);
             startActivity(i);
         }
 

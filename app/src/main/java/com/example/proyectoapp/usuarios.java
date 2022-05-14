@@ -20,6 +20,9 @@ public class usuarios {
         this.rol = objetoJSON.getString("rol");
     }
 
+    public usuarios() {
+    }
+
     public String getId() {
         return id;
     }

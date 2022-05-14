@@ -46,11 +46,23 @@ public class novedades_frag extends Fragment {
         View view =  inflater.inflate(R.layout.activity_novedades_frag,null);
         lvAllNovedades = (ListView) view.findViewById(R.id.Estu_novedades_frag_tvNove);
         btCrearNov = (Button) view.findViewById(R.id.Estu_novedades_frag_btCrear);
+
         listanovedades = new ArrayList<novedades>();
         listaInfo = new ArrayList<String>();
         listaNombres = new ArrayList<String>();
         idCurso = getActivity().getIntent().getStringExtra("IdCurso");
         new novedades_frag.TraerNovedades(getActivity()).execute();
+
+        btCrearNov.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), EscribirNovedad.class);
+                i.putExtra("idCur",idCurso);
+                startActivity(i);
+            }
+            });
+
         return view;
     }
 
