@@ -7,15 +7,12 @@
     tools:context=".EstudiantesCursos_Frag">
 
 
-    <TextView
-        android:id="@+id/cursosFrag_lvUsers"
-        android:layout_width="380dp"
-        android:layout_height="686dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="24dp"
-        android:text="TextView"
-        android:textColor="#000000"
-        android:textSize="24sp"
+    <ListView
+        android:id="@+id/Estu_novedades_frag_tvNove"
+        android:layout_width="407dp"
+        android:layout_height="704dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

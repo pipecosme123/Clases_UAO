@@ -6,11 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".eventosStudiantes_frag">
 
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="325dp"
-        tools:layout_editor_absoluteY="47dp" />
+    <ListView
+        android:id="@+id/EventosFragEstu_lvUsers"
+        android:layout_width="407dp"
+        android:layout_height="704dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

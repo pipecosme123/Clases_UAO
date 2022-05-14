@@ -6,11 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".novedades_frag">
 
-    <TextView
-        android:id="@+id/textView15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="275dp"
-        tools:layout_editor_absoluteY="425dp" />
+
+    <ListView
+        android:id="@+id/Estu_novedades_frag_tvNove"
+        android:layout_width="393dp"
+        android:layout_height="612dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="13dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Estu_novedades_frag_btCrear" />
+
+    <Button
+        android:id="@+id/Estu_novedades_frag_btCrear"
+        android:layout_width="374dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="30dp"
+        android:text="Crear Novedad"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

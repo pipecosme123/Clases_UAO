@@ -51,7 +51,7 @@ public class CursoInfo extends Fragment {
         tv2P = (TextView)view.findViewById(R.id.cursoInfo_tvPar2);
         tv3P = (TextView)view.findViewById(R.id.cursoInfo_tvrPar3);
         tvNombreDocente = (TextView)view.findViewById(R.id.cursoinfo_tvnombreDocente);
-        idCurso = getActivity().getIntent().getStringExtra("TipoUsuario");
+        idCurso = getActivity().getIntent().getStringExtra("IdCurso");
         new CursoInfo.trarInfoCurso(getActivity()).execute();
 
 
@@ -64,7 +64,7 @@ public class CursoInfo extends Fragment {
         //DATOS
         List<NameValuePair> nameValuePairs; // lista de datos
         nameValuePairs = new ArrayList<NameValuePair>(2);//definimos array
-        nameValuePairs.add(new BasicNameValuePair("id", "0")); // pasamos el id al servicio php
+        nameValuePairs.add(new BasicNameValuePair("id", idCurso)); // pasamos el id al servicio php
 
         String json = APIHandler.POSTRESPONSE(url, nameValuePairs); // creamos var json que se le asocia la respuesta del webservice
         Log.d("key of the message", "The message " + json);
@@ -79,6 +79,7 @@ public class CursoInfo extends Fragment {
         url = Constants.URL + "claseUAO/getDocenteCurso.php"; // Ruta
         nameValuePairs = new ArrayList<NameValuePair>(2);//definimos array
         nameValuePairs.add(new BasicNameValuePair("id", idCurso)); // pasamos el id al servicio php
+        nameValuePairs.add(new BasicNameValuePair("tipo", "Docente")); // pasamos el id al servicio php
 
        json = APIHandler.POSTRESPONSE(url, nameValuePairs); // creamos var json que se le asocia la respuesta del webservice
         Log.d("key of the message", "The message " + json);
