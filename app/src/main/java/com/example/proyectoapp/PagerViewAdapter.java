@@ -31,7 +31,7 @@ public class PagerViewAdapter extends FragmentPagerAdapter {
                 break;
 
             case 3:
-                fragment= new eventosStudiantes_frag();
+                fragment= new eventosDocente_frag();
                 break;
         }
 

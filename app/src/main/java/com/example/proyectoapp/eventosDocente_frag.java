@@ -32,7 +32,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class eventosStudiantes_frag extends Fragment {
+public class eventosDocente_frag extends Fragment {
     private TextView listaUsers;
     private ArrayList<eventos> listaEventos;
     private ArrayList<String> listaInfo;
@@ -47,7 +47,7 @@ public class eventosStudiantes_frag extends Fragment {
         listaEventos = new ArrayList<eventos>();
         listaInfo = new ArrayList<String>();
         idCurso = getActivity().getIntent().getStringExtra("IdCurso");
-        new eventosStudiantes_frag.TraerEventos(getActivity()).execute();
+        new eventosDocente_frag.TraerEventos(getActivity()).execute();
         return view;
     }
 

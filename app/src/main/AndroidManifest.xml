@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.proyectoapp">
+    package="com.example.proyectoapp" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
 
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,7 +17,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ProyectoApp"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true" >
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyC47JAVLqmbBXdC-r6qME02aieNp5H-zKw" />
+        <activity
+            android:name=".ScanEvento"
+            android:exported="false" />
+        <activity
+            android:name=".InfoEvento"
+            android:exported="false" />
         <activity
             android:name=".EscribirNovedad"
             android:exported="false" />
@@ -24,7 +34,7 @@
             android:name=".CursoInfo"
             android:exported="false" />
         <activity
-            android:name=".eventosStudiantes_frag"
+            android:name=".eventosDocente_frag"
             android:exported="false" />
         <activity
             android:name=".novedades_frag"
@@ -87,7 +97,7 @@
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
