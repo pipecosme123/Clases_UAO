@@ -43,6 +43,7 @@ public class Prueba extends AppCompatActivity {
 
                 StringTokenizer t = new StringTokenizer(scanContent,"*");
                 Intent i = new Intent(Prueba.this,InfoEvento.class);
+                i.putExtra("idEvento",t.nextToken());
                 i.putExtra("ENombre",t.nextToken());
                 i.putExtra("EFecha",t.nextToken());
                 i.putExtra("EHora",t.nextToken());
