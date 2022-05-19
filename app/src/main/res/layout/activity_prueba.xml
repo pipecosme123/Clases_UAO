@@ -4,13 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ScanEvento">
+    tools:context=".Prueba">
 
-    <Button
-        android:id="@+id/ScanEvento_btScan"
-        android:layout_width="346dp"
-        android:layout_height="69dp"
-        android:text="Scan"
-        tools:layout_editor_absoluteX="32dp"
-        tools:layout_editor_absoluteY="42dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

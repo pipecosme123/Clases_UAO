@@ -128,7 +128,7 @@ public class IniciarSesion extends AppCompatActivity {
         }*/
 
         if(user1.rol.equals("Estudiante")){
-            Intent i = new Intent(IniciarSesion.this,InfoEvento.class);
+            Intent i = new Intent(IniciarSesion.this,MainUsers.class);
             i.putExtra("idUserMain",user1.id);
             GlobalInfo.setUserActual(user);
             startActivity(i);

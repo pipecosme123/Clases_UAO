@@ -21,8 +21,8 @@
 
     <TextView
         android:id="@+id/infoEvento_tvNombre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="371dp"
+        android:layout_height="47dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Salida a empresa"
@@ -69,36 +69,36 @@
 
     <TextView
         android:id="@+id/infoEvento_tvFecha"
-        android:layout_width="119dp"
-        android:layout_height="33dp"
+        android:layout_width="296dp"
+        android:layout_height="32dp"
         android:layout_marginStart="7dp"
         android:layout_marginTop="20dp"
         android:text="13 de marzo"
-        android:textAlignment="center"
+        android:textAlignment="textStart"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/textView15"
         app:layout_constraintTop_toBottomOf="@+id/infoEvento_tvNombre" />
 
     <TextView
         android:id="@+id/infoEvento_tvHora"
-        android:layout_width="119dp"
-        android:layout_height="33dp"
+        android:layout_width="295dp"
+        android:layout_height="36dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="16dp"
         android:text="13 de marzo"
-        android:textAlignment="center"
+        android:textAlignment="textStart"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/textView16"
         app:layout_constraintTop_toBottomOf="@+id/infoEvento_tvFecha" />
 
     <TextView
         android:id="@+id/infoEvento_tvLugar"
-        android:layout_width="119dp"
-        android:layout_height="33dp"
+        android:layout_width="291dp"
+        android:layout_height="37dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="18dp"
         android:text="13 de marzo"
-        android:textAlignment="center"
+        android:textAlignment="textStart"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/textView17"
         app:layout_constraintTop_toBottomOf="@+id/infoEvento_tvHora" />

@@ -26,6 +26,7 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+
     }
     buildFeatures {
         viewBinding true
@@ -44,5 +45,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
     implementation 'com.google.android.gms:play-services-maps:18.0.2'
+    implementation 'com.journeyapps:zxing-android-embedded:4.1.0'
     implementation 'com.android.volley:volley:1.2.1'
 }
