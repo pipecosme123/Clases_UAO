@@ -36,7 +36,7 @@ import java.util.List;
 public class eventosDocente_frag extends Fragment {
     private TextView listaUsers;
     private ArrayList<eventos> listaEventos;
-    private ArrayList<String> listaInfo;
+    private String[][] listaInfo;
     private ArrayList<String> listaNombres;
     private ListView lvAllEvents;
     private String idCurso;
@@ -46,7 +46,6 @@ public class eventosDocente_frag extends Fragment {
         //listaUsers = (TextView) view.findViewById(R.id.EventosFragEstu_TVUsers);
         lvAllEvents = (ListView) view.findViewById(R.id.EventosFragEstu_lvUsers);
         listaEventos = new ArrayList<eventos>();
-        listaInfo = new ArrayList<String>();
         idCurso = getActivity().getIntent().getStringExtra("IdCurso");
         new eventosDocente_frag.TraerEventos(getActivity()).execute();
 
@@ -171,7 +170,7 @@ public class eventosDocente_frag extends Fragment {
     }
 
     public void llenarListView(){
-       for(int i =0;i<listaEventos.size();i++){
+       /*for(int i =0;i<listaEventos.size();i++){
            eventos e = listaEventos.get(i);
            String info = "\b "+e.getTitulo()+"\b0 \n"+
                         listaNombres.get(0)+"-"+e.getFechaHora()+"\n"+
@@ -179,6 +178,17 @@ public class eventosDocente_frag extends Fragment {
            listaInfo.add(info);
        }
         ArrayAdapter<String> Adapter= new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,listaInfo);
-        lvAllEvents.setAdapter(Adapter);
+        lvAllEvents.setAdapter(Adapter);*/
+
+        listaInfo = new String[listaEventos.size()][4];
+        for(int i =0;i<listaEventos.size();i++){
+
+            listaInfo[i][0] = listaEventos.get(i).getTitulo();
+            listaInfo[i][1] = listaNombres.get(0);
+            listaInfo[i][2] = listaEventos.get(i).getFechaCreacion();
+            listaInfo[i][3] = listaEventos.get(i).getDescripcion();
+
+        }
+        lvAllEvents.setAdapter(new AdaptadorNovedades(getActivity(),listaInfo));
     }
 }

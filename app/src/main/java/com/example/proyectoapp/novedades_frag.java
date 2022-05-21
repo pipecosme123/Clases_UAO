@@ -30,9 +30,10 @@ import java.util.List;
 public class novedades_frag extends Fragment {
     private ArrayList<novedades> listanovedades;
     private Button btCrearNov;
-    private ArrayList<String> listaInfo,listaNombres;
+    private ArrayList<String> listaNombres;
     private ListView lvAllNovedades;
     private String idCurso;
+    String [][] listaInfo;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.activity_novedades_frag,null);
@@ -40,7 +41,6 @@ public class novedades_frag extends Fragment {
         btCrearNov = (Button) view.findViewById(R.id.Estu_novedades_frag_btCrear);
 
         listanovedades = new ArrayList<novedades>();
-        listaInfo = new ArrayList<String>();
         listaNombres = new ArrayList<String>();
         idCurso = getActivity().getIntent().getStringExtra("IdCurso");
         new novedades_frag.TraerNovedades(getActivity()).execute();
@@ -78,7 +78,7 @@ public class novedades_frag extends Fragment {
 
             if (json_array.length() > 0) { // si lo encontrado tiene al menos un registro
 
-                listaInfo=new ArrayList<String>();
+
                 listanovedades=new ArrayList<novedades>();
                 for(int i = 0;i<json_array.length();i++){
                     novedades nove = new novedades(json_array.getJSONObject(i));// instanciamos la clase multa para obtener los datos json
@@ -159,23 +159,28 @@ public class novedades_frag extends Fragment {
 
     public void llenarListView() throws JSONException {
 
-        for(int i =0;i<listanovedades.size();i++){
+        /*for(int i =0;i<listanovedades.size();i++){
             novedades e = listanovedades.get(i);
 
             String info = "\b "+e.getTitulo()+"\b0 \n"+
                    listaNombres.get(i)+"-"+e.getFechaCreacion()+"\n"+
                     e.getDescripcion();
             listaInfo.add(info);
-        }
+        }*/
+        listaInfo = new String[listanovedades.size()][4];
+        for(int i =0;i<listanovedades.size();i++){
 
-        ArrayAdapter<String> Adapter= new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,listaInfo);
-        lvAllNovedades.setAdapter(Adapter);
+                listaInfo[i][0] = listanovedades.get(i).getTitulo();
+                listaInfo[i][1] = listaNombres.get(i);
+                listaInfo[i][2] = listanovedades.get(i).getFechaCreacion();
+                listaInfo[i][3] = listanovedades.get(i).getDescripcion();
+
+        }
+        lvAllNovedades.setAdapter(new AdaptadorNovedades(getActivity(),listaInfo));
     }
 
 
     private String consultarUser(String idUser) throws JSONException {
-
-
         return null;
     }
 }
