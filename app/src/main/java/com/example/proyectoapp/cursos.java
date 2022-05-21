@@ -7,8 +7,8 @@ public class cursos {
 
     String id, nombre, descripcion, duracion, dia, horaInico, horaFin, primParcial, segParcial, terParcial, novedades;
     public cursos(JSONObject objetoJSON) throws JSONException {
-        this.id = objetoJSON.getString("id");
-        this.nombre = objetoJSON.getString("nombre");
+        this.id = objetoJSON.getString("id_curs");
+        this.nombre = objetoJSON.getString("nombre_curso");
         this.descripcion = objetoJSON.getString("descripcion");
         this.duracion = objetoJSON.getString("duracion");
         this.dia = objetoJSON.getString("dia");

@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,11 +48,14 @@ public class ConsultarUsuario extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Consultar Usuarios");
-
-
+        lvAllUser.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                enviarAEditar(position);
+            }
+        });
 
         new ConsultarUsuario.TraerUsuarios(ConsultarUsuario.this).execute();
-
 
         btBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +68,12 @@ public class ConsultarUsuario extends AppCompatActivity {
 
             }
         });
+    }
+
+    void enviarAEditar(int pos){
+        Intent i = new Intent(this, EditarUsuario.class);
+        i.putExtra("UsuarioAEditar", listaUsuarios.get(pos).id);
+        startActivity(i);
     }
 
     private ArrayList<usuarios> consultar() throws JSONException, IOException {
