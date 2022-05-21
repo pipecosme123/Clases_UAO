@@ -7,6 +7,7 @@ import androidx.core.util.Pair;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +22,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
@@ -28,18 +32,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
-import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
-
+import java.text.FieldPosition;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-
-public class crearCurso extends AppCompatActivity {
+public class EditatCurso extends AppCompatActivity {
     //Nombre del curso
     EditText nombreCurso;
     //Descripcion del curso
@@ -65,13 +65,18 @@ public class crearCurso extends AppCompatActivity {
     //INSERTAR A BASE DE DATOS
     Button btnInsertar;
     Spinner spDocente;
+    String nombreDoc;
+    String idDoc;
 
+    String idCurso;
+    cursos cur;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_editat_curso);
         setContentView(R.layout.activity_crear_curso);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Crear Curso");
+        getSupportActionBar().setTitle("Editar Curso");
         spDocente =(Spinner)findViewById(R.id.EditarCurso_spDocente);
         //NOMBRE CURSO
         nombreCurso = (EditText) findViewById(R.id.EditarCurso_EtNCurso);
@@ -79,6 +84,7 @@ public class crearCurso extends AppCompatActivity {
         descripcionCurso = (EditText) findViewById(R.id.EtDescripcionCurso);
         //Duracion Curso
         DuracionCurso = findViewById(R.id.EditarCurso_EtDuracionCurso);
+        idCurso = getIntent().getStringExtra("CursoAEditar");
         MaterialDatePicker materialDatePicker = MaterialDatePicker.Builder.dateRangePicker().
                 setSelection(Pair.create(MaterialDatePicker.thisMonthInUtcMilliseconds(), MaterialDatePicker.todayInUtcMilliseconds())).build();
         DuracionCurso.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +115,7 @@ public class crearCurso extends AppCompatActivity {
         horaInicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TimePickerDialog timePickerDialog = new TimePickerDialog(crearCurso.this, new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(EditatCurso.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
                         horaInicio.setText(hourOfDay + ":" + minutes);
@@ -121,7 +127,7 @@ public class crearCurso extends AppCompatActivity {
         horaFin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TimePickerDialog timePickerDialog = new TimePickerDialog(crearCurso.this, new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(EditatCurso.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
                         horaFin.setText(hourOfDay + ":" + minutes);
@@ -155,7 +161,7 @@ public class crearCurso extends AppCompatActivity {
         prParcial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(crearCurso.this, date, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(EditatCurso.this, date, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
         //2
@@ -177,7 +183,7 @@ public class crearCurso extends AppCompatActivity {
         seParcial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(crearCurso.this, date2, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(EditatCurso.this, date2, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
         //3
@@ -199,7 +205,7 @@ public class crearCurso extends AppCompatActivity {
         teParcial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(crearCurso.this, date3, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(EditatCurso.this, date3, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
@@ -220,15 +226,17 @@ public class crearCurso extends AppCompatActivity {
                         (!seParcial.getText().toString().trim().equalsIgnoreCase("")) ||
                         (!teParcial.getText().toString().trim().equalsIgnoreCase(""))) {
 
-                    new Insertar(crearCurso.this).execute();
+                    new EditatCurso.Modificar(EditatCurso.this).execute();
                 } else {
 
-                    Toast.makeText(crearCurso.this, "Hay informacion por llenar", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditatCurso.this, "Hay informacion por llenar", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        new TraerDocente(crearCurso.this).execute();
+
+        new EditatCurso.TraerDocente(EditatCurso.this).execute();
+
     }
 
     public void onCheckboxClicked(View view) {
@@ -294,120 +302,139 @@ public class crearCurso extends AppCompatActivity {
         selected.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.radio_on));
     }
 
-    private boolean insertar() {
-        String url = Constants.URL + "claseUAO/insert_curso.php";
+    private boolean editar() {
+
+        String url = Constants.URL + "claseUAO/updateCurso.php";
+
         //DATOS
         List<NameValuePair> nameValuePairs; // definimos la lista de datos
-        nameValuePairs = new ArrayList<NameValuePair>(10); // tamaño del array
-        nameValuePairs.add(new BasicNameValuePair("nombre", nombreCurso.getText().toString().trim()));
+        nameValuePairs = new ArrayList<NameValuePair>(11); // tamaño del array
+        nameValuePairs.add(new BasicNameValuePair("id_curs", idCurso));
+        nameValuePairs.add(new BasicNameValuePair("nombre_curso", nombreCurso.getText().toString().trim()));
         nameValuePairs.add(new BasicNameValuePair("descripcion", descripcionCurso.getText().toString().trim()));
         nameValuePairs.add(new BasicNameValuePair("duracion", DuracionCurso.getText().toString().trim()));
         nameValuePairs.add(new BasicNameValuePair("dia", resultDia.getText().toString().trim()));
         nameValuePairs.add(new BasicNameValuePair("horaInico", horaInicio.getText().toString().trim()));
-        nameValuePairs.add(new BasicNameValuePair("horaFin", horaInicio.getText().toString().trim()));
+        nameValuePairs.add(new BasicNameValuePair("horaFin", horaFin.getText().toString().trim()));
         nameValuePairs.add(new BasicNameValuePair("primParcial", prParcial.getText().toString().trim()));
         nameValuePairs.add(new BasicNameValuePair("segParcial", seParcial.getText().toString().trim()));
         nameValuePairs.add(new BasicNameValuePair("terParcial", teParcial.getText().toString().trim()));
         nameValuePairs.add(new BasicNameValuePair("novedades", "1"));
-
         boolean response = APIHandler.POST(url, nameValuePairs);
 
+        int idActual=Integer.parseInt(idDoc);
 
+
+
+
+        url = Constants.URL + "claseUAO/updateParticipacion.php";
+        nameValuePairs = new ArrayList<NameValuePair>(3); // tamaño del array
+        nameValuePairs.add(new BasicNameValuePair("id", idCurso));
+        nameValuePairs.add(new BasicNameValuePair("nuevo", idDocente.get(spDocente.getSelectedItemPosition())));
+        nameValuePairs.add(new BasicNameValuePair("actual", idActual+""));
+
+        response = APIHandler.POST(url, nameValuePairs);
+
+        url = Constants.URL + "claseUAO/insertParticipacion.php";
+        String indiceD =idDocente.get(spDocente.getSelectedItemPosition());
+        nameValuePairs = new ArrayList<NameValuePair>(2); // tamaño del array
+        nameValuePairs.add(new BasicNameValuePair("user",  idDocente.get(spDocente.getSelectedItemPosition())));
+        nameValuePairs.add(new BasicNameValuePair("curso", idCurso));
+        response = APIHandler.POST(url, nameValuePairs);
         return response;
     }
 
-    class Insertar extends AsyncTask<String, String, String> {
+    class Modificar extends AsyncTask<String, String, String> {
         private Activity context;
 
-        Insertar(Activity context) {
+        Modificar(Activity context) {
             this.context = context;
         }
 
         protected String doInBackground(String... params) {
-            if (insertar())
+            if (editar())
                 context.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(context, "Curso insertado", Toast.LENGTH_LONG).show();
-                        nombreCurso.setText("");
-                        descripcionCurso.setText("");
-                        DuracionCurso.setText("");
-                        resultDia.setText("");
-                        horaInicio.setText("");
-                        horaFin.setText("");
-                        prParcial.setText("");
-                        seParcial.setText("");
-                        teParcial.setText("");
-                        traerCur();
+                        Toast.makeText(context, "Usuario modificada", Toast.LENGTH_LONG).show();
+                        regresar();
                     }
                 });
             else
                 context.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(context, "Curso no insertado", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Usuario no encontrada", Toast.LENGTH_LONG).show();
                     }
                 });
             return null;
         }
     }
-    void traerCur(){
-        new TraerCurso(crearCurso.this).execute();
+
+    private void regresar(){
+        Intent i = new Intent(this, consultarCurso.class);
+        startActivity(i);
     }
 
-    private Boolean TraerCursos() throws JSONException, IOException {
+    private Boolean consultar() throws JSONException, IOException {
 
-        String url = Constants.URL + "claseUAO/getUltimoCurso.php"; // Ruta
-
+        String url = Constants.URL + "claseUAO/get-curso-by-id.php"; // Ruta
         //DATOS
         List<NameValuePair> nameValuePairs; // lista de datos
-        nameValuePairs = new ArrayList<NameValuePair>(1);//definimos array
-        nameValuePairs.add(new BasicNameValuePair("id", "nombre"));
-
+        nameValuePairs = new ArrayList<NameValuePair>(2);//definimos array
+        nameValuePairs.add(new BasicNameValuePair("id", idCurso)); // pasamos el id al servicio php
 
         String json = APIHandler.POSTRESPONSE(url, nameValuePairs); // creamos var json que se le asocia la respuesta del webservice
         Log.d("key of the message", "The message " + json);
         if (json != null) { // si la respuesta no es vacia
             JSONObject object = new JSONObject(json); // creamos el objeto json que recorrera el servicio
             JSONArray json_array = object.optJSONArray("user");// accedemos al objeto json llamado multas
+            if (json_array.length() > 0) { // si lo encontrado tiene al menos un registro
+                cur = new cursos(json_array.getJSONObject(0));// instanciamos la clase multa para obtener los datos json
+            }
+        }
 
-            ArrayList<cursos> listaCur = new ArrayList<cursos>();
+        url = Constants.URL + "claseUAO/getDocenteCurso.php"; // Ruta
+        nameValuePairs = new ArrayList<NameValuePair>(2);//definimos array
+        nameValuePairs.add(new BasicNameValuePair("id", idCurso)); // pasamos el id al servicio php
+        nameValuePairs.add(new BasicNameValuePair("tipo", "Docente")); // pasamos el id al servicio php
 
-            for(int i = 0;i<json_array.length();i++){
-                cursos cur = new cursos(json_array.getJSONObject(i));// instanciamos la clase multa para obtener los datos json
-                infoCurso  = json_array.getJSONObject(i).getString("id_curs");
-
+        json = APIHandler.POSTRESPONSE(url, nameValuePairs); // creamos var json que se le asocia la respuesta del webservice
+        Log.d("key of the message", "The message " + json);
+        if (json != null) { // si la respuesta no es vacia
+            JSONObject object = new JSONObject(json); // creamos el objeto json que recorrera el servicio
+            JSONArray json_array = object.optJSONArray("curso");// accedemos al objeto json llamado multas
+            if (json_array.length() > 0) { // si lo encontrado tiene al menos un registro
+                String nombre = json_array.getJSONObject(0).getString("nombre");
+                String apellido = json_array.getJSONObject(0).getString("apellidos");// instanciamos la clase multa para obtener los datos json
+                nombreDoc= nombre+" "+apellido;
+                idDoc = json_array.getJSONObject(0).getString("id");
             }
 
         }
-        url = Constants.URL + "claseUAO/insertParticipacion.php";
-        String indiceD =idDocente.get(spDocente.getSelectedItemPosition());
-        nameValuePairs = new ArrayList<NameValuePair>(2); // tamaño del array
-        nameValuePairs.add(new BasicNameValuePair("user", indiceD.trim()));
-        nameValuePairs.add(new BasicNameValuePair("curso", infoCurso));
-        boolean response = APIHandler.POST(url, nameValuePairs);
+
         return true;
     }
 
-
-    class TraerCurso extends AsyncTask<String, String, String> {
+    class trarInfoCurso extends AsyncTask<String, String, String> {
         private Activity context;
 
-        TraerCurso(Activity context) {
+        trarInfoCurso(Activity context) {
             this.context = context;
         }
 
         protected String doInBackground(String... params) {
             try {
-                Boolean b = TraerCursos();
+
+                final boolean f= consultar();
+
                 //  Toast.makeText(MainActivity.this, "Hay informacion por llenar", Toast.LENGTH_SHORT).show();
-                if (b)
+                if (cur != null)
                     context.runOnUiThread(new Runnable() {
-
-
                         @Override
                         public void run() {
 
+                            actualizarPagina();
 
                         }
                     });
@@ -428,6 +455,26 @@ public class crearCurso extends AppCompatActivity {
         }
     }
 
+    void actualizarPagina(){
+         nombreCurso.setText(cur.getNombre());
+         descripcionCurso.setText(cur.getDescripcion());
+         DuracionCurso.setText(cur.getDuracion());
+         resultDia.setText(cur.getDia());
+         horaInicio.setText(cur.getHoraInico());
+         horaFin.setText(cur.getHoraFin());
+         prParcial.setText(cur.getPrimParcial());
+         seParcial.setText(cur.getSegParcial());
+         teParcial.setText(cur.getTerParcial());
+
+         for(int i =0;i<idDocente.size();i++){
+
+             if(idDocente.get(i).equals(idDoc)){
+                 Log.d("key of the message", "--------------------------" + idDocente.get(i)+"."+idDoc);
+                 spDocente.setSelection(i);
+             }
+         }
+    }
+
     private ArrayList<usuarios> traerDocentes() throws JSONException, IOException {
 
         String url = Constants.URL + "claseUAO/getAllDocente.php"; // Ruta
@@ -439,7 +486,7 @@ public class crearCurso extends AppCompatActivity {
         nameValuePairs.add(new BasicNameValuePair("tabla", "q"));
 
         String json = APIHandler.POSTRESPONSE(url, nameValuePairs); // creamos var json que se le asocia la respuesta del webservice
-        Log.d("key of the message", "--------------------------" + json);
+
         if (json != null) { // si la respuesta no es vacia
             JSONObject object = new JSONObject(json); // creamos el objeto json que recorrera el servicio
             JSONArray json_array = object.optJSONArray("user");// accedemos al objeto json llamado multas
@@ -499,10 +546,9 @@ public class crearCurso extends AppCompatActivity {
         }
     }
 
-   void  llenarSpinner(){
-       ArrayAdapter<String> Adapter= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,listaInfoDocente);
-       spDocente.setAdapter(Adapter);
+    void  llenarSpinner(){
+        ArrayAdapter<String> Adapter= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,listaInfoDocente);
+        spDocente.setAdapter(Adapter);
+        new EditatCurso.trarInfoCurso(EditatCurso.this).execute();
     }
-}
-
-
+    }
