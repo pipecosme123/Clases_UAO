@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.os.Bundle;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -48,7 +49,20 @@ public class eventosDocente_frag extends Fragment {
         listaInfo = new ArrayList<String>();
         idCurso = getActivity().getIntent().getStringExtra("IdCurso");
         new eventosDocente_frag.TraerEventos(getActivity()).execute();
+
+        lvAllEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                enviarAAsisEvento(position);
+            }
+        });
         return view;
+    }
+
+    void enviarAAsisEvento(int pos){
+        Intent i = new Intent(getActivity(), AsistentesEvento.class);
+        i.putExtra("idEvento", listaEventos.get(pos).id);
+        startActivity(i);
     }
 
     private Boolean consultar() throws JSONException, IOException {

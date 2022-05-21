@@ -8,7 +8,7 @@
 
 
     <ListView
-        android:id="@+id/Estu_novedades_frag_tvNove"
+        android:id="@+id/AsistentesEvento_tvEstu"
         android:layout_width="393dp"
         android:layout_height="612dp"
         android:layout_marginStart="2dp"

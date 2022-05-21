@@ -9,12 +9,15 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -54,11 +57,16 @@ public class crearCurso extends AppCompatActivity {
     EditText prParcial, seParcial, teParcial;
     Calendar calendar;
     //NOVEADES
-    CheckBox novedades;
+
     String estado;
+    List<String> idDocente;
+    List<usuarios> listaUsuarios ;
+    List<String> listaInfoDocente;
+    String infoCurso;
 
     //INSERTAR A BASE DE DATOS
     Button btnInsertar;
+    Spinner spDocente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +74,7 @@ public class crearCurso extends AppCompatActivity {
         setContentView(R.layout.activity_crear_curso);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Crear Curso");
+        spDocente =(Spinner)findViewById(R.id.crearCurso_spDocente);
         //NOMBRE CURSO
         nombreCurso = (EditText) findViewById(R.id.EtNCurso);
         //DESCRIPCION CURSO
@@ -197,17 +206,7 @@ public class crearCurso extends AppCompatActivity {
         });
 
         //Novedades
-        novedades = (CheckBox) findViewById(R.id.CBNovedades);
-        novedades.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (novedades.isChecked()) {
-                    estado = "1";
-                } else {
-                    estado = "0";
-                }
-            }
-        });
+
 
         //INSERTAR
         btnInsertar = findViewById(R.id.btnAnadirCurso);
@@ -221,8 +220,7 @@ public class crearCurso extends AppCompatActivity {
                         (!horaFin.getText().toString().trim().equalsIgnoreCase("")) ||
                         (!prParcial.getText().toString().trim().equalsIgnoreCase("")) ||
                         (!seParcial.getText().toString().trim().equalsIgnoreCase("")) ||
-                        (!teParcial.getText().toString().trim().equalsIgnoreCase("")) ||
-                        (estado == "0")) {
+                        (!teParcial.getText().toString().trim().equalsIgnoreCase(""))) {
 
                     new Insertar(crearCurso.this).execute();
                 } else {
@@ -231,6 +229,8 @@ public class crearCurso extends AppCompatActivity {
                 }
             }
         });
+
+        new TraerDocente(crearCurso.this).execute();
     }
 
     public void onCheckboxClicked(View view) {
@@ -310,8 +310,11 @@ public class crearCurso extends AppCompatActivity {
         nameValuePairs.add(new BasicNameValuePair("primParcial", prParcial.getText().toString().trim()));
         nameValuePairs.add(new BasicNameValuePair("segParcial", seParcial.getText().toString().trim()));
         nameValuePairs.add(new BasicNameValuePair("terParcial", teParcial.getText().toString().trim()));
-        nameValuePairs.add(new BasicNameValuePair("novedades", estado));
+        nameValuePairs.add(new BasicNameValuePair("novedades", "1"));
+
         boolean response = APIHandler.POST(url, nameValuePairs);
+
+
         return response;
     }
 
@@ -337,6 +340,7 @@ public class crearCurso extends AppCompatActivity {
                         prParcial.setText("");
                         seParcial.setText("");
                         teParcial.setText("");
+                        traerCur();
                     }
                 });
             else
@@ -348,6 +352,158 @@ public class crearCurso extends AppCompatActivity {
                 });
             return null;
         }
+    }
+    void traerCur(){
+        new TraerCurso(crearCurso.this).execute();
+    }
+
+    private Boolean TraerCursos() throws JSONException, IOException {
+
+        String url = Constants.URL + "claseUAO/getAllCurso.php"; // Ruta
+
+        //DATOS
+        List<NameValuePair> nameValuePairs; // lista de datos
+        nameValuePairs = new ArrayList<NameValuePair>(1);//definimos array
+        nameValuePairs.add(new BasicNameValuePair("id", "nombre"));
+
+
+        String json = APIHandler.POSTRESPONSE(url, nameValuePairs); // creamos var json que se le asocia la respuesta del webservice
+        Log.d("key of the message", "The message " + json);
+        if (json != null) { // si la respuesta no es vacia
+            JSONObject object = new JSONObject(json); // creamos el objeto json que recorrera el servicio
+            JSONArray json_array = object.optJSONArray("user");// accedemos al objeto json llamado multas
+
+            ArrayList<cursos> listaCur = new ArrayList<cursos>();
+
+            for(int i = 0;i<json_array.length();i++){
+                cursos cur = new cursos(json_array.getJSONObject(i));// instanciamos la clase multa para obtener los datos json
+                infoCurso  = json_array.getJSONObject(i).getString("id_curs");
+
+            }
+
+        }
+        url = Constants.URL + "claseUAO/insertParticipacion.php";
+        String indiceD =idDocente.get(spDocente.getSelectedItemPosition());
+        nameValuePairs = new ArrayList<NameValuePair>(2); // tamaño del array
+        nameValuePairs.add(new BasicNameValuePair("user", indiceD.trim()));
+        nameValuePairs.add(new BasicNameValuePair("curso", infoCurso));
+        boolean response = APIHandler.POST(url, nameValuePairs);
+        return true;
+    }
+
+
+    class TraerCurso extends AsyncTask<String, String, String> {
+        private Activity context;
+
+        TraerCurso(Activity context) {
+            this.context = context;
+        }
+
+        protected String doInBackground(String... params) {
+            try {
+                Boolean b = TraerCursos();
+                //  Toast.makeText(MainActivity.this, "Hay informacion por llenar", Toast.LENGTH_SHORT).show();
+                if (b)
+                    context.runOnUiThread(new Runnable() {
+
+
+                        @Override
+                        public void run() {
+
+
+                        }
+                    });
+                else
+                    context.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "Usuario no encontrado", Toast.LENGTH_LONG).show();
+
+                        }
+                    });
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+    private ArrayList<usuarios> traerDocentes() throws JSONException, IOException {
+
+        String url = Constants.URL + "claseUAO/getAllDocente.php"; // Ruta
+
+        //DATOS
+        List<NameValuePair> nameValuePairs; // lista de datos
+        nameValuePairs = new ArrayList<NameValuePair>(2);//definimos array
+        nameValuePairs.add(new BasicNameValuePair("id", "2"));
+        nameValuePairs.add(new BasicNameValuePair("tabla", "q"));
+
+        String json = APIHandler.POSTRESPONSE(url, nameValuePairs); // creamos var json que se le asocia la respuesta del webservice
+        Log.d("key of the message", "--------------------------" + json);
+        if (json != null) { // si la respuesta no es vacia
+            JSONObject object = new JSONObject(json); // creamos el objeto json que recorrera el servicio
+            JSONArray json_array = object.optJSONArray("user");// accedemos al objeto json llamado multas
+
+            ArrayList<usuarios> listaUsu = new ArrayList<usuarios>();
+            listaInfoDocente=new ArrayList<String>();
+            idDocente=new ArrayList<String>();
+            listaUsuarios=new ArrayList<usuarios>();
+
+            for(int i = 0;i<json_array.length();i++){
+                usuarios user = new usuarios(json_array.getJSONObject(i));// instanciamos la clase multa para obtener los datos json
+                String userInfo = user.getNombre() + " " + user.getApellidos();
+                listaInfoDocente.add(userInfo);
+                idDocente.add(user.getId());
+                listaUsu.add(user);
+            }
+            return listaUsu;
+        }
+        return null;
+    }
+
+
+    class TraerDocente extends AsyncTask<String, String, String> {
+        private Activity context;
+
+        TraerDocente(Activity context) {
+            this.context = context;
+        }
+
+        protected String doInBackground(String... params) {
+            try {
+                listaUsuarios = traerDocentes();
+                //  Toast.makeText(MainActivity.this, "Hay informacion por llenar", Toast.LENGTH_SHORT).show();
+                if (listaUsuarios != null)
+                    context.runOnUiThread(new Runnable() {
+
+
+                        @Override
+                        public void run() {
+                            llenarSpinner();
+                        }
+                    });
+                else
+                    context.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "Usuario no encontrado", Toast.LENGTH_LONG).show();
+
+                        }
+                    });
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+   void  llenarSpinner(){
+       ArrayAdapter<String> Adapter= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,listaInfoDocente);
+       spDocente.setAdapter(Adapter);
     }
 }
 

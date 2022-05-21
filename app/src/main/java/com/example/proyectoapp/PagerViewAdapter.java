@@ -31,7 +31,10 @@ public class PagerViewAdapter extends FragmentPagerAdapter {
                 break;
 
             case 3:
+                if(GlobalInfo.getUserActual().getRol().equals("Estudiante"))
                 fragment= new ScanEvento();
+                else
+                fragment = new eventosDocente_frag();
                 break;
         }
 

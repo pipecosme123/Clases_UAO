@@ -34,5 +34,10 @@ public class gestion_admin extends AppCompatActivity {
         startActivity(gestionCursos);
     }
 
+    public void btNovedades(View view){
+        Intent gestionCursos = new Intent(this, AsignarEstudiantes.class);
+        startActivity(gestionCursos);
+    }
+
 
 }

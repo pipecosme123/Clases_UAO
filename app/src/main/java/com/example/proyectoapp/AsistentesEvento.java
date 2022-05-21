@@ -1,18 +1,13 @@
 package com.example.proyectoapp;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import androidx.appcompat.app.AppCompatActivity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
@@ -25,31 +20,32 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EstudiantesCursos_Frag extends Fragment {
+public class AsistentesEvento extends AppCompatActivity {
     private ListView listaUsers;
     private ArrayList<usuarios> listaUsuarios;
     private ArrayList<String> listaInfo;
-    private String idCurso;
+    private String idEvento;
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_estudiantes_cursos_frag, null);
-        listaUsers = (ListView) view.findViewById(R.id.AsistentesEvento_tvEstu);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_asistentes_evento);
+
+        listaUsers = (ListView)findViewById(R.id.AsistentesEvento_tvEstu);
         listaUsuarios = new ArrayList<usuarios>();
         listaInfo = new ArrayList<String>();
-        idCurso = getActivity().getIntent().getStringExtra("IdCurso");
-        new EstudiantesCursos_Frag.TraerUsuarios(getActivity()).execute();
-        return view;
+        idEvento = this.getIntent().getStringExtra("idEvento");
+        new AsistentesEvento.TraerUsuarios(this).execute();
     }
 
     private ArrayList<String> consultar() throws JSONException, IOException {
 
-        String url = Constants.URL + "claseUAO/getDocenteCurso.php"; // Ruta
+        String url = Constants.URL + "claseUAO/getAsisEvento.php"; // Ruta
 
         //DATOS
         List<NameValuePair> nameValuePairs; // lista de datos
         nameValuePairs = new ArrayList<NameValuePair>(1);//definimos array
-        nameValuePairs.add(new BasicNameValuePair("id", idCurso)); // pasamos el id al servicio php
-        nameValuePairs.add(new BasicNameValuePair("tipo", "Estudiante")); // pasamos el id al servicio php
+        nameValuePairs.add(new BasicNameValuePair("Evento", idEvento)); // pasamos el id al servicio php
+
 
         String json = APIHandler.POSTRESPONSE(url, nameValuePairs); // creamos var json que se le asocia la respuesta del webservice
 
@@ -119,7 +115,7 @@ public class EstudiantesCursos_Frag extends Fragment {
     }
 
     public void llenarListView() {
-        ArrayAdapter<String> Adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, listaInfo);
+        ArrayAdapter<String>Adapter= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,listaInfo);
         listaUsers.setAdapter(Adapter);
     }
 }

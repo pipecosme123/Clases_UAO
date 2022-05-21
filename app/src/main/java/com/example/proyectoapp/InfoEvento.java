@@ -108,6 +108,7 @@ public class InfoEvento extends AppCompatActivity implements OnMapReadyCallback 
 
         Log.d("key of the message", "************************************* " + nameValuePairs);
         boolean response = APIHandler.POST(url, nameValuePairs);
+
         return response;
     }
 
@@ -125,6 +126,8 @@ public class InfoEvento extends AppCompatActivity implements OnMapReadyCallback 
                     @Override
                     public void run() {
                         Toast.makeText(context, "Asistencia confirmada", Toast.LENGTH_LONG).show();
+                        Intent in = new Intent(InfoEvento.this,cursoHome.class);
+                        startActivity(in);
                     }
                 });
             else

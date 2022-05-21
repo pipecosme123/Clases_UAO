@@ -1,7 +1,6 @@
 package com.example.proyectoapp;
 
 
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,15 +11,10 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
@@ -33,8 +27,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.os.Bundle;
-
 public class novedades_frag extends Fragment {
     private ArrayList<novedades> listanovedades;
     private Button btCrearNov;
@@ -44,7 +36,7 @@ public class novedades_frag extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.activity_novedades_frag,null);
-        lvAllNovedades = (ListView) view.findViewById(R.id.Estu_novedades_frag_tvNove);
+        lvAllNovedades = (ListView) view.findViewById(R.id.AsistentesEvento_tvEstu);
         btCrearNov = (Button) view.findViewById(R.id.Estu_novedades_frag_btCrear);
 
         listanovedades = new ArrayList<novedades>();
