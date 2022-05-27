@@ -19,6 +19,9 @@
         android:theme="@style/Theme.ProyectoApp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".EditatCurso"
+            android:exported="false" />
+        <activity
             android:name=".AsignarEstudiantes"
             android:exported="false" />
         <activity

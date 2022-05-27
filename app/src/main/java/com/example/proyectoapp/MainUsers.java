@@ -26,8 +26,8 @@ public class MainUsers extends AppCompatActivity {
 
     private ListView lvCursos;
     private String idUser;
-    private ArrayList<String> datosCurso;
-    private ArrayList<String> listaInfo;
+    String [][] datosCurso;
+    String[][] listaInfo;
     private ArrayList<String> idsCursos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class MainUsers extends AppCompatActivity {
         startActivity(i);
     }
 
-    private ArrayList<String> consultar() throws JSONException, IOException {
+    private String[][] consultar() throws JSONException, IOException {
 
         String url = Constants.URL + "claseUAO/getCursosUser.php"; // Ruta
         //DATOS
@@ -66,13 +66,15 @@ public class MainUsers extends AppCompatActivity {
         nameValuePairs = new ArrayList<NameValuePair>(3);//definimos array
         nameValuePairs.add(new BasicNameValuePair("id", idUser)); // pasamos el id al servicio php
         String json = APIHandler.POSTRESPONSE(url, nameValuePairs); // creamos var json que se le asocia la respuesta del webservice
-        Log.d("key of the message", "------------------------------ " + json);
+
         if (json != null) { // si la respuesta no es vacia
             JSONObject object = new JSONObject(json); // creamos el objeto json que recorrera el servicio
             JSONArray json_array = object.optJSONArray("curso");// accedemos al objeto json llamado multas
             JSONArray jArray = new JSONArray();
             if (json_array.length() > 0) { // si lo encontrado tiene al menos un registro
-                listaInfo=new ArrayList<String>();
+                Log.d("key of the message", "------------------------------ " + json_array.length());
+                datosCurso = new String[json_array.length()][4];
+                listaInfo = new String[json_array.length()][4];
                 idsCursos=new ArrayList<String>();
                 for(int i = 0;i<json_array.length();i++){
                     String idC =json_array.getJSONObject(i).getString("id_curs");
@@ -80,9 +82,13 @@ public class MainUsers extends AppCompatActivity {
                     String dia =json_array.getJSONObject(i).getString("dia");
                     String horaIni =json_array.getJSONObject(i).getString("horaInico");
                     String horaFin =json_array.getJSONObject(i).getString("horaFin");
-                    String info = nombre+"\n\n"+dia+"\n"+horaIni+"-"+horaFin+"\n\n\n";
-                    listaInfo.add(info); // instanciamos la clase multa para obtener los datos json
+
+                    listaInfo[i][0] = nombre;
+                    listaInfo[i][1] = dia;
+                    listaInfo[i][2] = horaIni;
+                    listaInfo[i][3] = horaFin;
                     idsCursos.add(idC);
+
                 }
                 return listaInfo;
             }
@@ -129,8 +135,7 @@ public class MainUsers extends AppCompatActivity {
     }
 
     public void llenarListView(){
-        ArrayAdapter<String>Adapter= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,datosCurso);
-        lvCursos.setAdapter(Adapter);
+        lvCursos.setAdapter(new adaptadorCurso(this,listaInfo));
     }
 
 }
